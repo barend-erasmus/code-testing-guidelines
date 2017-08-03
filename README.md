@@ -1,6 +1,6 @@
 # Code Testing Guidelines
 
-Unit Test, Integration Test, Functional Test, Acceptance Test
+Unit Test, Integration Test, Functional Test
 
 ## Unit Test
 
@@ -38,15 +38,15 @@ Integration Test should test the integration of your code with external resource
 ```javascript
 
 // Method
-function getDateFromServer() {
+function getCurrentDateFromServer() {
     return request('http://my-date-server.local/current-date')
         .then((result) => {
-            return JSON.parse(result);
+            return parseResulToDate(result);
         });
 }
 
 // This method should be Unit Tested
-function parseResultoDate(result) {
+function parseResulToDate(result) {
     try {
         return JSON.parse(result).currentDate;
     }catch(err) {
@@ -55,9 +55,9 @@ function parseResultoDate(result) {
 }
 
 // Integration Test
-describe('getDateFromServer', () => {
+describe('getCurrentDateFromServer', () => {
     it('should return date', () => {
-        return getDateFromServer().then((result) => {
+        return getCurrentDateFromServer().then((result) => {
             expect(result).to.be.not.null;
         });
     });
@@ -67,8 +67,28 @@ describe('getDateFromServer', () => {
 
 ## Functional Test
 
-Coming Soon...
+Functional Test (referred to as E2E, Black Box or Browser Testing) should test at the highest level with as little knowledge as possible of the internal workings.
 
-## Acceptance Test
+```javascript
 
-Coming Soon...
+// Method
+function requestCurrentDate() {
+    return getCurrentDateFromServer().then((result) => {
+        if (isValidDateFormat(result)) {
+            return result;
+        }else {
+            return null;
+        }
+    });
+}
+
+// Functional Test
+describe('requestCurrentDate', () => {
+    it('should return date', () => {
+        return requestCurrentDate().then((result) => {
+            expect(result).to.be.not.null;
+        });
+    });
+});
+
+```
