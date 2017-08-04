@@ -4,7 +4,7 @@ Unit Test, Integration Test, Functional Test
 
 ## Unit Test
 
-Unit Test should only isolated methods which do not have dependencies on any external resources.
+Unit Test should only test isolated methods which do not have dependencies on any external resources.
 
 If the method is using an external resources such as file system, network or database, it's not a unit test.
 
